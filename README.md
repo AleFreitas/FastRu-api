@@ -8,4 +8,4 @@ available at the restaurant. This means every student has to buy their ticket or
 
 # database modeling
 
-![image](https://user-images.githubusercontent.com/83618808/230737583-1d5dc742-8a79-4a4e-82dc-c8072d5b3d67.png)
+![image](https://user-images.githubusercontent.com/83618808/230745447-42975c51-2bbb-4566-8235-ceb97a11c237.png)
