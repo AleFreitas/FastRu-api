@@ -7,4 +7,10 @@ async function registerMainDish(name: string) {
     await dishesRepositories.insertMainDish(name);
 }
 
-export default {registerMainDish}
+async function registerSalad(name: string) {
+    const saladExists = await dishesRepositories.findSalad(name)
+    if (saladExists.rows.length !== 0) throw errors.conflictError("salad already exists")
+    await dishesRepositories.insertSalad(name);
+}
+
+export default {registerMainDish, registerSalad}

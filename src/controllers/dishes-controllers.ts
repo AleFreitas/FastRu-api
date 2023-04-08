@@ -6,10 +6,20 @@ async function createMainDish(req: Request, res: Response, next){
     try{
         const {name}:{name:string}  = req.body
         await dishesServices.registerMainDish(name)
-        res.send(httpStatus.CREATED)
+        res.sendStatus(httpStatus.CREATED)
     } catch (err) {
         return next(err);
     }
 }
 
-export default {createMainDish}
+async function createSalad(req: Request, res: Response, next){
+    try{
+        const {name}:{name:string}  = req.body
+        await dishesServices.registerSalad(name)
+        res.sendStatus(httpStatus.CREATED)
+    } catch (err) {
+        return next(err);
+    }
+}
+
+export default {createMainDish, createSalad}
