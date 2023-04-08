@@ -13,4 +13,14 @@ async function registerSalad(name: string) {
     await dishesRepositories.insertSalad(name);
 }
 
-export default {registerMainDish, registerSalad}
+async function registerAccompaniment(name: string) {
+    const accompanimentExists = await dishesRepositories.findAccompaniments(name)
+    if (accompanimentExists.rowCount !== 0) throw errors.conflictError("accompaniment already exists")
+    await dishesRepositories.insertAccompaniments(name);
+}
+
+export default {
+    registerMainDish, 
+    registerSalad,
+    registerAccompaniment
+}

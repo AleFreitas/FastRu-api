@@ -15,6 +15,13 @@ async function findSalad(name: string): Promise<QueryResult> {
     `, [name]);
 }
 
+async function findAccompaniments(name: string): Promise<QueryResult> {
+    return pool.query(`
+        SELECT * FROM accompaniments
+        WHERE name=$1;         
+    `, [name]);
+}
+
 async function insertMainDish(name: string): Promise<QueryResult>{
     return pool.query(`
         INSERT INTO main_dishes (name)
@@ -29,4 +36,18 @@ async function insertSalad(name: string): Promise<QueryResult>{
     `,[name])
 }
 
-export default {findMainDish, insertMainDish, findSalad, insertSalad}
+async function insertAccompaniments(name: string): Promise<QueryResult>{
+    return pool.query(`
+        INSERT INTO accompaniments (name)
+        VALUES ($1)
+    `,[name])
+}
+
+export default {
+    findMainDish, 
+    findSalad,
+    findAccompaniments,
+    insertMainDish,
+    insertSalad,
+    insertAccompaniments
+}

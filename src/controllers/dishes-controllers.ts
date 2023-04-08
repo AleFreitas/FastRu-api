@@ -22,4 +22,18 @@ async function createSalad(req: Request, res: Response, next){
     }
 }
 
-export default {createMainDish, createSalad}
+async function createAccompaniment(req: Request, res: Response, next){
+    try{
+        const {name}:{name:string}  = req.body
+        await dishesServices.registerAccompaniment(name)
+        res.sendStatus(httpStatus.CREATED)
+    } catch (err) {
+        return next(err);
+    }
+}
+
+export default {
+    createMainDish, 
+    createSalad,
+    createAccompaniment
+}
