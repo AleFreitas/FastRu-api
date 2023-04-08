@@ -15,9 +15,16 @@ async function findSalad(name: string): Promise<QueryResult> {
     `, [name]);
 }
 
-async function findAccompaniments(name: string): Promise<QueryResult> {
+async function findAccompaniment(name: string): Promise<QueryResult> {
     return pool.query(`
         SELECT * FROM accompaniments
+        WHERE name=$1;         
+    `, [name]);
+}
+
+async function findDessert(name: string): Promise<QueryResult> {
+    return pool.query(`
+        SELECT * FROM desserts
         WHERE name=$1;         
     `, [name]);
 }
@@ -36,9 +43,16 @@ async function insertSalad(name: string): Promise<QueryResult>{
     `,[name])
 }
 
-async function insertAccompaniments(name: string): Promise<QueryResult>{
+async function insertAccompaniment(name: string): Promise<QueryResult>{
     return pool.query(`
         INSERT INTO accompaniments (name)
+        VALUES ($1)
+    `,[name])
+}
+
+async function insertDessert(name: string): Promise<QueryResult>{
+    return pool.query(`
+        INSERT INTO desserts (name)
         VALUES ($1)
     `,[name])
 }
@@ -46,8 +60,10 @@ async function insertAccompaniments(name: string): Promise<QueryResult>{
 export default {
     findMainDish, 
     findSalad,
-    findAccompaniments,
+    findAccompaniment,
+    findDessert,
     insertMainDish,
     insertSalad,
-    insertAccompaniments
+    insertAccompaniment,
+    insertDessert
 }
