@@ -21,5 +21,7 @@ dishRouter.put("/dish/salad",validateSchema(updateSaladSchema), dishesController
 dishRouter.put("/dish/accompaniment",validateSchema(updateDishSchema), dishesControllers.updateDishAccompaniment)
 dishRouter.put("/dish/dessert",validateSchema(updateDishSchema), dishesControllers.updateDishDessert)
 
+dishRouter.get("/dish", dishesControllers.getDishByDate)
+
 
 export default dishRouter;

@@ -1,6 +1,6 @@
 import pool from "../config/database.js"
 import { QueryResult } from "pg";
-import { DishEntity } from "../protocols/dishes-types.js";
+import { DishEntity, DishGetQuery } from "../protocols/dishes-types.js";
 
 async function findMainDish(name: string): Promise<QueryResult> {
     return pool.query(`
@@ -100,86 +100,107 @@ async function insertDish(dish: DishEntity): Promise<QueryResult> {
     `, [dish.worker_id, dish.main_dish_id, dish.salad1_id, dish.salad2_id, dish.accompaniment_id, dish.dessert_id, dish.date])
 }
 
-async function deleteDish(date:Date){
+async function deleteDish(date: Date): Promise<QueryResult> {
     return pool.query(`
         DELETE FROM dishes
         WHERE date=$1
     `, [date])
 }
 
-async function deleteDishById(id:number){
+async function deleteDishById(id: number): Promise<QueryResult> {
     return pool.query(`
         DELETE FROM dishes
         WHERE id=$1
     `, [id])
 }
 
-async function deleteMainDish(name:string){
+async function deleteMainDish(name: string): Promise<QueryResult> {
     return pool.query(`
         DELETE FROM main_dishes
         WHERE name=$1
     `, [name])
 }
 
-async function deleteSalad(name:string){
+async function deleteSalad(name: string): Promise<QueryResult> {
     return pool.query(`
         DELETE FROM salads
         WHERE name=$1
     `, [name])
 }
 
-async function deleteAccompaniment(name:string){
+async function deleteAccompaniment(name: string): Promise<QueryResult> {
     return pool.query(`
         DELETE FROM accompaniments
         WHERE name=$1
     `, [name])
 }
 
-async function deleteDessert(name:string){
+async function deleteDessert(name: string): Promise<QueryResult> {
     return pool.query(`
         DELETE FROM desserts
         WHERE name=$1
     `, [name])
 }
 
-async function updateDishMainDish(dishId:number,main_dish_id:number){
+async function updateDishMainDish(dishId: number, main_dish_id: number): Promise<QueryResult> {
     return pool.query(`
         UPDATE dishes
         SET main_dish_id=$1
         WHERE id=$2
-    `, [main_dish_id,dishId])
+    `, [main_dish_id, dishId])
 }
 
-async function updateDishSalad1(dishId:number,salad_id:number){
+async function updateDishSalad1(dishId: number, salad_id: number): Promise<QueryResult> {
     return pool.query(`
         UPDATE dishes
         SET salad1_id=$1
         WHERE id=$2
-    `, [salad_id,dishId])
+    `, [salad_id, dishId])
 }
 
-async function updateDishSalad2(dishId:number,salad_id:number){
+async function updateDishSalad2(dishId: number, salad_id: number): Promise<QueryResult> {
     return pool.query(`
         UPDATE dishes
         SET salad2_id=$1
         WHERE id=$2
-    `, [salad_id,dishId])
+    `, [salad_id, dishId])
 }
 
-async function updateDishAccompaniment(dishId:number,accompaniment_id:number){
+async function updateDishAccompaniment(dishId: number, accompaniment_id: number): Promise<QueryResult> {
     return pool.query(`
         UPDATE dishes
         SET accompaniment_id=$1
         WHERE id=$2
-    `, [accompaniment_id,dishId])
+    `, [accompaniment_id, dishId])
 }
 
-async function updateDishDessert(dishId:number,dessert_id:number){
+async function updateDishDessert(dishId: number, dessert_id: number): Promise<QueryResult> {
     return pool.query(`
         UPDATE dishes
         SET dessert_id=$1
         WHERE id=$2
-    `, [dessert_id,dishId])
+    `, [dessert_id, dishId])
+}
+
+async function getDishByDate(date: Date): Promise<QueryResult<DishGetQuery>> {
+    return pool.query(`
+        SELECT d.id,workers.name as worker,main_dishes.name as main_dish,
+        s1.name AS salad1, s2.name AS salad2,
+        accompaniments.name as accompaniment,
+        desserts.name as dessert, d.date
+        FROM dishes d
+        JOIN workers 
+        ON d.created_by = workers.id
+        JOIN main_dishes
+        ON d.main_dish_id = main_dishes.id
+        LEFT JOIN salads s1 ON d.salad1_id = s1.id
+        LEFT JOIN salads s2 ON d.salad2_id = s2.id
+        JOIN accompaniments
+        ON d.accompaniment_id = accompaniments.id
+        JOIN desserts
+        ON d.dessert_id = desserts.id
+        WHERE d.date = $1;
+    `, [date])
 }
 
 export default {
@@ -192,6 +213,7 @@ export default {
     findDishByDessert,
     findDishByMainDish,
     findDishBySalad,
+    getDishByDate,
     insertMainDish,
     insertSalad,
     insertAccompaniment,

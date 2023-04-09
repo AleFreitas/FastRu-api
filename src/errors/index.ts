@@ -1,11 +1,11 @@
-function conflictError(message) {
+function conflictError(message: string) {
     return {
         name: "ConflictError",
         message,
     };
 }
 
-function duplicatedEmailError(email) {
+function duplicatedEmailError(email: string) {
     return {
         name: "DuplicatedEmailError",
         message: "There is already an user with given email",
@@ -27,10 +27,17 @@ function notFoundError() {
     };
 }
 
-function notFoundAtQueryError(data,column){
+function notFoundAtQueryError(data: string,column: string){
     return {
         name: "NotFoundAtQueryError",
         message: `Couldn't find a ${column} named ${data}`,
+    };
+}
+
+function httpsQueryNotGiven(query: string){
+    return {
+        name: "HttpsQueryNotGiven",
+        message: `Couldn't find a ${query} query in the api url`,
     };
 }
 
@@ -48,4 +55,5 @@ export default {
     notFoundError,
     invalidCredentialsError,
     notFoundAtQueryError,
+    httpsQueryNotGiven
 };
