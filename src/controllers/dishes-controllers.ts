@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import httpStatus from 'http-status';
 import dishesServices from "../services/dishes-services.js";
+import { Dish } from "../protocols/dishes-types.js";
 
 async function createMainDish(req: Request, res: Response, next){
     try{
@@ -42,10 +43,23 @@ async function createDessert(req: Request, res: Response, next){
     }
 }
 
+async function createDish(req: Request, res: Response, next){
+    try{
+        const dish: Dish  = req.body
+        const worker_id = req.query.worker_id
+        await dishesServices.registerDish(dish, worker_id)
+        res.sendStatus(httpStatus.CREATED)
+    } catch (err) {
+        console.log(err.message)
+        return next(err);
+    }
+}
+
 
 export default {
     createMainDish, 
     createSalad,
     createAccompaniment,
-    createDessert
+    createDessert,
+    createDish
 }
