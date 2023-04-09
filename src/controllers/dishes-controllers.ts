@@ -80,6 +80,36 @@ async function deleteMainDish(req: Request, res: Response, next){
     }
 }
 
+async function deleteSalad(req: Request, res: Response, next){
+    try{
+        const {name}  = req.query
+        await dishesServices.removeSalad(name as string)
+        res.sendStatus(204)
+    } catch (err) {
+        return next(err);
+    }
+}
+
+async function deleteAccompaniment(req: Request, res: Response, next){
+    try{
+        const {name}  = req.query
+        await dishesServices.removeAccompaniment(name as string)
+        res.sendStatus(204)
+    } catch (err) {
+        return next(err);
+    }
+}
+
+async function deleteDessert(req: Request, res: Response, next){
+    try{
+        const {name}  = req.query
+        await dishesServices.removeDessert(name as string)
+        res.sendStatus(204)
+    } catch (err) {
+        return next(err);
+    }
+}
+
 export default {
     createMainDish, 
     createSalad,
@@ -87,5 +117,8 @@ export default {
     createDessert,
     createDish,
     deleteDish,
-    deleteMainDish
+    deleteMainDish,
+    deleteAccompaniment,
+    deleteDessert,
+    deleteSalad
 }

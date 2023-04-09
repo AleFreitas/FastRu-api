@@ -121,6 +121,26 @@ async function deleteMainDish(name:string){
     `, [name])
 }
 
+async function deleteSalad(name:string){
+    return pool.query(`
+        DELETE FROM salads
+        WHERE name=$1
+    `, [name])
+}
+
+async function deleteAccompaniment(name:string){
+    return pool.query(`
+        DELETE FROM accompaniments
+        WHERE name=$1
+    `, [name])
+}
+
+async function deleteDessert(name:string){
+    return pool.query(`
+        DELETE FROM desserts
+        WHERE name=$1
+    `, [name])
+}
 
 export default {
     findMainDish,
@@ -139,5 +159,8 @@ export default {
     insertDish,
     deleteDish,
     deleteMainDish,
-    deleteDishById
+    deleteDishById,
+    deleteSalad,
+    deleteAccompaniment,
+    deleteDessert
 }

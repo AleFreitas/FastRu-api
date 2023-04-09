@@ -74,6 +74,36 @@ async function removeMainDish(name: string) {
     await dishesRepositories.deleteMainDish(name);
 }
 
+async function removeSalad(name: string) {
+    const saladExists = await dishesRepositories.findSalad(name)
+    if (saladExists.rowCount === 0) throw errors.notFoundError()
+    const dishExists = await dishesRepositories.findDishBySalad(saladExists.rows[0].id)
+    if (dishExists.rowCount !== 0) {
+        await dishesRepositories.deleteDishById(dishExists.rows[0].id)
+    }
+    await dishesRepositories.deleteSalad(name);
+}
+
+async function removeAccompaniment(name: string) {
+    const accompanimentExists = await dishesRepositories.findAccompaniment(name)
+    if (accompanimentExists.rowCount === 0) throw errors.notFoundError()
+    const dishExists = await dishesRepositories.findDishByAccompaniment(accompanimentExists.rows[0].id)
+    if (dishExists.rowCount !== 0) {
+        await dishesRepositories.deleteDishById(dishExists.rows[0].id)
+    }
+    await dishesRepositories.deleteAccompaniment(name);
+}
+
+async function removeDessert(name: string) {
+    const dessertExists = await dishesRepositories.findDessert(name)
+    if (dessertExists.rowCount === 0) throw errors.notFoundError()
+    const dishExists = await dishesRepositories.findDishByDessert(dessertExists.rows[0].id)
+    if (dishExists.rowCount !== 0) {
+        await dishesRepositories.deleteDishById(dishExists.rows[0].id)
+    }
+    await dishesRepositories.deleteDessert(name);
+}
+
 export default {
     registerMainDish, 
     registerSalad,
@@ -81,5 +111,8 @@ export default {
     registerDessert,
     registerDish,
     removeDish,
-    removeMainDish
+    removeMainDish,
+    removeDessert,
+    removeAccompaniment,
+    removeSalad
 }
