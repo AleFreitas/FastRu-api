@@ -112,6 +112,37 @@ async function alterDishMainDish(date:Date,name:string){
     await dishesRepositories.updateDishMainDish(dishExists.rows[0].id,mainDishExists.rows[0].id)
 }
 
+async function alterDishSalad(date:Date,name:string,saladOption:number){
+    const dishExists = await dishesRepositories.findDishByDate(date)
+    if (dishExists.rowCount === 0) throw errors.notFoundError()
+    const saladExists = await dishesRepositories.findSalad(name)
+    if (saladExists.rowCount === 0) throw errors.notFoundError()
+    if(saladOption === 1){
+        await dishesRepositories.updateDishSalad1(dishExists.rows[0].id,saladExists.rows[0].id)
+    }else{
+        await dishesRepositories.updateDishSalad2(dishExists.rows[0].id,saladExists.rows[0].id)
+    }
+}
+
+async function alterDishAccompaniment(date:Date,name:string){
+    const dishExists = await dishesRepositories.findDishByDate(date)
+    if (dishExists.rowCount === 0) throw errors.notFoundError()
+    const accompanimentExists = await dishesRepositories.findAccompaniment(name)
+    if (accompanimentExists.rowCount === 0) throw errors.notFoundError()
+    await dishesRepositories.updateDishAccompaniment(dishExists.rows[0].id,accompanimentExists.rows[0].id)
+}
+
+async function alterDishDessert(date:Date,name:string){
+    const dishExists = await dishesRepositories.findDishByDate(date)
+    if (dishExists.rowCount === 0) throw errors.notFoundError()
+    const dessertExists = await dishesRepositories.findDessert(name)
+    if (dessertExists.rowCount === 0) throw errors.notFoundError()
+    await dishesRepositories.updateDishDessert(dishExists.rows[0].id,dessertExists.rows[0].id)
+}
+
+
+
+
 export default {
     registerMainDish, 
     registerSalad,
@@ -123,5 +154,8 @@ export default {
     removeDessert,
     removeAccompaniment,
     removeSalad,
-    alterDishMainDish
+    alterDishMainDish,
+    alterDishSalad,
+    alterDishAccompaniment,
+    alterDishDessert
 }

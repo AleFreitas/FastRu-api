@@ -20,4 +20,10 @@ const updateDishSchema = Joi.object({
     name: Joi.string().required()
 });
 
-export { dishComponentSchema, dishSchema, updateDishSchema }
+const updateSaladSchema = Joi.object({
+    chosenDate: JoiWithDate.date().format('DD/MM/YYYY').required(),
+    name: Joi.string().required(),
+    saladOption: Joi.number().required()
+});
+
+export { dishComponentSchema, dishSchema, updateDishSchema, updateSaladSchema }

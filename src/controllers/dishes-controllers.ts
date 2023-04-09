@@ -62,7 +62,6 @@ async function deleteDish(req: Request, res: Response, next) {
         const month = dateAsList[1]
         const year = dateAsList[2]
         const date = new Date([year, month, day].join("/"))
-        console.log(date)
         await dishesServices.removeDish(date)
         res.send(httpStatus.DELETE)
     } catch (err) {
@@ -118,15 +117,57 @@ async function updateDishMainDish(req: Request, res: Response, next) {
         const month = dateAsList[1]
         const year = dateAsList[2]
         const date = new Date([year, month, day].join("/"))
-        console.log(date)
         await dishesServices.alterDishMainDish(date, name)
-        res.send(httpStatus.DELETE)
+        res.send(httpStatus.UPDATE)
     } catch (err) {
-        console.log(err.message)
         return next(err)
     }
 }
 
+async function updateDishSalad(req: Request, res: Response, next) {
+    try {
+        const { chosenDate, name, saladOption } = req.body
+        const dateAsList = (chosenDate as string).split("/")
+        const day = dateAsList[0]
+        const month = dateAsList[1]
+        const year = dateAsList[2]
+        const date = new Date([year, month, day].join("/"))
+        await dishesServices.alterDishSalad(date, name, saladOption)
+        res.send(httpStatus.UPDATE)
+    } catch (err) {
+        return next(err)
+    }
+}
+
+async function updateDishAccompaniment(req: Request, res: Response, next) {
+    try {
+        const { chosenDate, name} = req.body
+        const dateAsList = (chosenDate as string).split("/")
+        const day = dateAsList[0]
+        const month = dateAsList[1]
+        const year = dateAsList[2]
+        const date = new Date([year, month, day].join("/"))
+        await dishesServices.alterDishAccompaniment(date, name)
+        res.send(httpStatus.UPDATE)
+    } catch (err) {
+        return next(err)
+    }
+}
+
+async function updateDishDessert(req: Request, res: Response, next) {
+    try {
+        const { chosenDate, name} = req.body
+        const dateAsList = (chosenDate as string).split("/")
+        const day = dateAsList[0]
+        const month = dateAsList[1]
+        const year = dateAsList[2]
+        const date = new Date([year, month, day].join("/"))
+        await dishesServices.alterDishDessert(date, name)
+        res.send(httpStatus.UPDATE)
+    } catch (err) {
+        return next(err)
+    }
+}
 
 export default {
     createMainDish,
@@ -139,5 +180,8 @@ export default {
     deleteAccompaniment,
     deleteDessert,
     deleteSalad,
-    updateDishMainDish
+    updateDishMainDish,
+    updateDishSalad,
+    updateDishAccompaniment,
+    updateDishDessert
 }
