@@ -142,6 +142,14 @@ async function deleteDessert(name:string){
     `, [name])
 }
 
+async function updateDishMainDish(dishId:number,main_dish_id:number){
+    return pool.query(`
+        UPDATE dishes
+        SET main_dish_id=$1
+        WHERE id=$2
+    `, [main_dish_id,dishId])
+}
+
 export default {
     findMainDish,
     findSalad,
@@ -162,5 +170,6 @@ export default {
     deleteDishById,
     deleteSalad,
     deleteAccompaniment,
-    deleteDessert
+    deleteDessert,
+    updateDishMainDish
 }
