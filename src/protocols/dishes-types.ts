@@ -16,3 +16,14 @@ export type DishEntity = {
     dessert_id:number,
     date:Date
 }
+
+export type DishGetQuery = {
+    id:number,
+    worker:string,
+    main_dish:string,
+    salad1:string,
+    salad2:string,
+    accompaniment:string,
+    dessert:string,
+    date:Date
+}

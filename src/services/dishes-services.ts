@@ -140,7 +140,10 @@ async function alterDishDessert(date:Date,name:string){
     await dishesRepositories.updateDishDessert(dishExists.rows[0].id,dessertExists.rows[0].id)
 }
 
-
+async function findDishByDate(date: Date){
+    const result = await dishesRepositories.getDishByDate(date)
+    return result;
+}
 
 
 export default {
@@ -157,5 +160,6 @@ export default {
     alterDishMainDish,
     alterDishSalad,
     alterDishAccompaniment,
-    alterDishDessert
+    alterDishDessert,
+    findDishByDate
 }

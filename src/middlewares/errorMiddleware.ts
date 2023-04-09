@@ -20,7 +20,7 @@ export function handleApplicationErrors(err, req: Request, res: Response, next) 
         });
     }
 
-    if (err.name === "NotFoundError" || err.name === "NotFoundAtQueryError") {
+    if (err.name === "NotFoundError" || err.name === "NotFoundAtQueryError" || err.name === "HttpsQueryNotGiven") {
         return res.status(httpStatus.NOT_FOUND).send({
             message: err.message,
         });
