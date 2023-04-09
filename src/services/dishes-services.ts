@@ -145,6 +145,13 @@ async function findDishByDate(date: Date){
     return result;
 }
 
+async function findDishByWorker(id: string){
+    const workerExists = await userRepositories.findWorker(parseInt(id))
+    if (workerExists.rowCount === 0) throw errors.conflictError("worker doesn't exist")
+    const result = await dishesRepositories.getDishByWorker(id)
+    return result;
+}
+
 
 export default {
     registerMainDish, 
@@ -161,5 +168,6 @@ export default {
     alterDishSalad,
     alterDishAccompaniment,
     alterDishDessert,
-    findDishByDate
+    findDishByDate,
+    findDishByWorker
 }

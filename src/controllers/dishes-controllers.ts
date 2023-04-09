@@ -192,6 +192,18 @@ async function getDishByDate(req: Request, res: Response, next){
     }
 }
 
+async function getDishByWorker(req: Request, res: Response, next){
+    try {
+        const { id } = req.query
+        if(!id) throw errors.httpsQueryNotGiven("id")
+        const dishes = await dishesServices.findDishByWorker(id as string)
+        res.status(httpStatus.OK).send(dishes.rows)
+    } catch (err) {
+        console.log(err.message)
+        return next(err)
+    }
+}
+
 export default {
     createMainDish,
     createSalad,
@@ -207,5 +219,6 @@ export default {
     updateDishSalad,
     updateDishAccompaniment,
     updateDishDessert,
-    getDishByDate
+    getDishByDate,
+    getDishByWorker
 }
