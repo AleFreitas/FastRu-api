@@ -55,7 +55,7 @@ Body: { "name" : "main dish name" }
 {\
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"name":"dessert name",\
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"chosenDate":"DD/MM/YYYY"\
-}\
+}
 
 #### GET: /dish?chosenDate=DD_MM_YYYY
 #### GET: /dish/worker?id=5
