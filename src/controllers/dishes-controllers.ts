@@ -70,6 +70,15 @@ async function deleteDish(req: Request, res:Response, next){
     }
 }
 
+async function deleteMainDish(req: Request, res: Response, next){
+    try{
+        const {name}  = req.query
+        await dishesServices.removeMainDish(name as string)
+        res.sendStatus(204)
+    } catch (err) {
+        return next(err);
+    }
+}
 
 export default {
     createMainDish, 
@@ -77,5 +86,6 @@ export default {
     createAccompaniment,
     createDessert,
     createDish,
-    deleteDish
+    deleteDish,
+    deleteMainDish
 }

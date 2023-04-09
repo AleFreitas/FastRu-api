@@ -55,7 +55,6 @@ async function registerDish(dish: Dish, worker_id) {
         dessert_id:dessertExists.rows[0].id,
         date:dish.date
     }
-    console.log(dishIds)
     await dishesRepositories.insertDish(dishIds)
 }
 
@@ -65,11 +64,22 @@ async function removeDish(date:Date){
     await dishesRepositories.deleteDish(date)
 }
 
+async function removeMainDish(name: string) {
+    const mainDishExists = await dishesRepositories.findMainDish(name)
+    if (mainDishExists.rowCount === 0) throw errors.notFoundError()
+    const dishExists = await dishesRepositories.findDishByMainDish(mainDishExists.rows[0].id)
+    if (dishExists.rowCount !== 0) {
+        await dishesRepositories.deleteDishById(dishExists.rows[0].id)
+    }
+    await dishesRepositories.deleteMainDish(name);
+}
+
 export default {
     registerMainDish, 
     registerSalad,
     registerAccompaniment,
     registerDessert,
     registerDish,
-    removeDish
+    removeDish,
+    removeMainDish
 }

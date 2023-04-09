@@ -11,5 +11,7 @@ dishRouter.post("/dessert", validateSchema(dishComponentSchema), dishesControlle
 dishRouter.post("/dish", validateSchema(dishSchema), dishesControllers.createDish)
 
 dishRouter.delete("/dish",dishesControllers.deleteDish)
+dishRouter.delete("/main_dish", dishesControllers.deleteMainDish)
+
 
 export default dishRouter;
