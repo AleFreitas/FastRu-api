@@ -203,6 +203,28 @@ async function getDishByDate(date: Date): Promise<QueryResult<DishGetQuery>> {
     `, [date])
 }
 
+
+async function getDishByWorker(id: string): Promise<QueryResult<DishGetQuery>> {
+    return pool.query(`
+        SELECT d.id,workers.name as worker,main_dishes.name as main_dish,
+        s1.name AS salad1, s2.name AS salad2,
+        accompaniments.name as accompaniment,
+        desserts.name as dessert, d.date
+        FROM dishes d
+        JOIN workers 
+        ON d.created_by = workers.id
+        JOIN main_dishes
+        ON d.main_dish_id = main_dishes.id
+        LEFT JOIN salads s1 ON d.salad1_id = s1.id
+        LEFT JOIN salads s2 ON d.salad2_id = s2.id
+        JOIN accompaniments
+        ON d.accompaniment_id = accompaniments.id
+        JOIN desserts
+        ON d.dessert_id = desserts.id
+        WHERE d.created_by = $1;
+    `, [id])
+}
+
 export default {
     findMainDish,
     findSalad,
@@ -229,5 +251,6 @@ export default {
     updateDishSalad1,
     updateDishSalad2,
     updateDishAccompaniment,
-    updateDishDessert
+    updateDishDessert,
+    getDishByWorker
 }

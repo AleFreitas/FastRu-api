@@ -22,6 +22,7 @@ dishRouter.put("/dish/accompaniment",validateSchema(updateDishSchema), dishesCon
 dishRouter.put("/dish/dessert",validateSchema(updateDishSchema), dishesControllers.updateDishDessert)
 
 dishRouter.get("/dish", dishesControllers.getDishByDate)
+dishRouter.get("/dish/worker", dishesControllers.getDishByWorker)
 
 
 export default dishRouter;
