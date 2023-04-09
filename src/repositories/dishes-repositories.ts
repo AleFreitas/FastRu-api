@@ -142,6 +142,46 @@ async function deleteDessert(name:string){
     `, [name])
 }
 
+async function updateDishMainDish(dishId:number,main_dish_id:number){
+    return pool.query(`
+        UPDATE dishes
+        SET main_dish_id=$1
+        WHERE id=$2
+    `, [main_dish_id,dishId])
+}
+
+async function updateDishSalad1(dishId:number,salad_id:number){
+    return pool.query(`
+        UPDATE dishes
+        SET salad1_id=$1
+        WHERE id=$2
+    `, [salad_id,dishId])
+}
+
+async function updateDishSalad2(dishId:number,salad_id:number){
+    return pool.query(`
+        UPDATE dishes
+        SET salad2_id=$1
+        WHERE id=$2
+    `, [salad_id,dishId])
+}
+
+async function updateDishAccompaniment(dishId:number,accompaniment_id:number){
+    return pool.query(`
+        UPDATE dishes
+        SET accompaniment_id=$1
+        WHERE id=$2
+    `, [accompaniment_id,dishId])
+}
+
+async function updateDishDessert(dishId:number,dessert_id:number){
+    return pool.query(`
+        UPDATE dishes
+        SET dessert_id=$1
+        WHERE id=$2
+    `, [dessert_id,dishId])
+}
+
 export default {
     findMainDish,
     findSalad,
@@ -162,5 +202,10 @@ export default {
     deleteDishById,
     deleteSalad,
     deleteAccompaniment,
-    deleteDessert
+    deleteDessert,
+    updateDishMainDish,
+    updateDishSalad1,
+    updateDishSalad2,
+    updateDishAccompaniment,
+    updateDishDessert
 }

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import dishesControllers from "../controllers/dishes-controllers.js";
-import { dishComponentSchema, dishSchema } from "../schemas/dishes-schemas.js";
+import { dishComponentSchema, dishSchema, updateDishSchema, updateSaladSchema } from "../schemas/dishes-schemas.js";
 import { validateSchema } from "../middlewares/validateSchema.js";
 const dishRouter = Router()
  
@@ -15,6 +15,11 @@ dishRouter.delete("/salad", dishesControllers.deleteSalad)
 dishRouter.delete("/accompaniment", dishesControllers.deleteAccompaniment)
 dishRouter.delete("/dessert", dishesControllers.deleteDessert)
 dishRouter.delete("/dish",dishesControllers.deleteDish)
+
+dishRouter.put("/dish/main_dish",validateSchema(updateDishSchema), dishesControllers.updateDishMainDish)
+dishRouter.put("/dish/salad",validateSchema(updateSaladSchema), dishesControllers.updateDishSalad)
+dishRouter.put("/dish/accompaniment",validateSchema(updateDishSchema), dishesControllers.updateDishAccompaniment)
+dishRouter.put("/dish/dessert",validateSchema(updateDishSchema), dishesControllers.updateDishDessert)
 
 
 export default dishRouter;
