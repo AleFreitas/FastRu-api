@@ -55,7 +55,6 @@ async function registerDish(dish: Dish, worker_id) {
         dessert_id:dessertExists.rows[0].id,
         date:dish.date
     }
-    console.log(dishIds)
     await dishesRepositories.insertDish(dishIds)
 }
 
@@ -65,11 +64,55 @@ async function removeDish(date:Date){
     await dishesRepositories.deleteDish(date)
 }
 
+async function removeMainDish(name: string) {
+    const mainDishExists = await dishesRepositories.findMainDish(name)
+    if (mainDishExists.rowCount === 0) throw errors.notFoundError()
+    const dishExists = await dishesRepositories.findDishByMainDish(mainDishExists.rows[0].id)
+    if (dishExists.rowCount !== 0) {
+        await dishesRepositories.deleteDishById(dishExists.rows[0].id)
+    }
+    await dishesRepositories.deleteMainDish(name);
+}
+
+async function removeSalad(name: string) {
+    const saladExists = await dishesRepositories.findSalad(name)
+    if (saladExists.rowCount === 0) throw errors.notFoundError()
+    const dishExists = await dishesRepositories.findDishBySalad(saladExists.rows[0].id)
+    if (dishExists.rowCount !== 0) {
+        await dishesRepositories.deleteDishById(dishExists.rows[0].id)
+    }
+    await dishesRepositories.deleteSalad(name);
+}
+
+async function removeAccompaniment(name: string) {
+    const accompanimentExists = await dishesRepositories.findAccompaniment(name)
+    if (accompanimentExists.rowCount === 0) throw errors.notFoundError()
+    const dishExists = await dishesRepositories.findDishByAccompaniment(accompanimentExists.rows[0].id)
+    if (dishExists.rowCount !== 0) {
+        await dishesRepositories.deleteDishById(dishExists.rows[0].id)
+    }
+    await dishesRepositories.deleteAccompaniment(name);
+}
+
+async function removeDessert(name: string) {
+    const dessertExists = await dishesRepositories.findDessert(name)
+    if (dessertExists.rowCount === 0) throw errors.notFoundError()
+    const dishExists = await dishesRepositories.findDishByDessert(dessertExists.rows[0].id)
+    if (dishExists.rowCount !== 0) {
+        await dishesRepositories.deleteDishById(dishExists.rows[0].id)
+    }
+    await dishesRepositories.deleteDessert(name);
+}
+
 export default {
     registerMainDish, 
     registerSalad,
     registerAccompaniment,
     registerDessert,
     registerDish,
-    removeDish
+    removeDish,
+    removeMainDish,
+    removeDessert,
+    removeAccompaniment,
+    removeSalad
 }
