@@ -59,10 +59,17 @@ async function registerDish(dish: Dish, worker_id) {
     await dishesRepositories.insertDish(dishIds)
 }
 
+async function removeDish(date:Date){
+    const dishExists = await dishesRepositories.findDishByDate(date)
+    if (dishExists.rowCount === 0) throw errors.notFoundError()
+    await dishesRepositories.deleteDish(date)
+}
+
 export default {
     registerMainDish, 
     registerSalad,
     registerAccompaniment,
     registerDessert,
-    registerDish
+    registerDish,
+    removeDish
 }

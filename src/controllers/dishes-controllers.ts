@@ -50,7 +50,22 @@ async function createDish(req: Request, res: Response, next){
         await dishesServices.registerDish(dish, worker_id)
         res.sendStatus(httpStatus.CREATED)
     } catch (err) {
-        console.log(err.message)
+        return next(err);
+    }
+}
+
+async function deleteDish(req: Request, res:Response, next){
+    try{
+        const receivedDate = req.query.date
+        const dateAsList = (receivedDate as string).split("_")
+        const day = dateAsList[0]
+        const month = dateAsList[1]
+        const year = dateAsList[2]
+        const date = new Date([year,month,day].join("/")) 
+        console.log(date)
+        await dishesServices.removeDish(date)
+        res.send(httpStatus.DELETE)
+    } catch (err) {
         return next(err);
     }
 }
@@ -61,5 +76,6 @@ export default {
     createSalad,
     createAccompaniment,
     createDessert,
-    createDish
+    createDish,
+    deleteDish
 }

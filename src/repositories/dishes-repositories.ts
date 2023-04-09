@@ -72,6 +72,13 @@ async function insertDish(dish: DishEntity): Promise<QueryResult> {
     `, [dish.worker_id, dish.main_dish_id, dish.salad1_id, dish.salad2_id, dish.accompaniment_id, dish.dessert_id, dish.date])
 }
 
+async function deleteDish(date:Date){
+    return pool.query(`
+        DELETE FROM dishes
+        WHERE date=$1
+    `, [date])
+}
+
 export default {
     findMainDish,
     findSalad,
@@ -82,5 +89,6 @@ export default {
     insertSalad,
     insertAccompaniment,
     insertDessert,
-    insertDish
+    insertDish,
+    deleteDish
 }

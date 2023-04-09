@@ -10,4 +10,6 @@ dishRouter.post("/accompaniment", validateSchema(dishComponentSchema), dishesCon
 dishRouter.post("/dessert", validateSchema(dishComponentSchema), dishesControllers.createDessert)
 dishRouter.post("/dish", validateSchema(dishSchema), dishesControllers.createDish)
 
+dishRouter.delete("/dish",dishesControllers.deleteDish)
+
 export default dishRouter;
